@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TheSimpleList;"
+             Title="Listas"             
+             x:Name="ThisListPage"
+             x:Class="TheSimpleList.Src.Modules.List.Views.ListPage">
+    <StackLayout>
+        <ListView x:Name="ItensList"                  
+                HorizontalOptions="FillAndExpand" 
+                SelectionMode="None"
+                SeparatorVisibility="None"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Itens}">
+            <ListView.Header>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Source={x:Reference ThisListPage}, Path=BindingContext}"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <StackLayout 
+                        Orientation="Horizontal"
+                        Margin="10">
+                            <Grid x:Name="Item">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="{Binding Product.Name}"></Label>
+                                <Label Grid.Column="1" FontSize="Medium" VerticalTextAlignment="Center" Text="{Binding Amount}"></Label>
+                                <Switch Grid.Column="2" IsToggled="{Binding Checked, Mode=TwoWay}" ></Switch>
+                                <Button  Grid.Column="4"
+                                Text="X" 
+                                FontSize="Medium"
+                                CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
+                                Command="{Binding RemoveCommand}"
+                                BindingContext="{Binding Source={x:Reference ItensList}, Path=BindingContext}"></Button>
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Entry x:Name="button" Completed="AddItem" Placeholder="Digite o Produto" />
+    </StackLayout>
+</ContentPage>
+
